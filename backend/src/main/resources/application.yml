@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: timecapsule-api
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:timecapsule}
+    username: ${DB_USER:timecapsule}
+    password: ${DB_PASSWORD:timecapsule}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+
+timecapsule:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-use-at-least-32-characters}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:10080}
+  evaluation:
+    fixed-delay-ms: ${EVALUATION_FIXED_DELAY_MS:30000}
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    com.timecapsule: INFO

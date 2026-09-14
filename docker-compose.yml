@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: timecapsule
+      POSTGRES_PASSWORD: timecapsule
+      POSTGRES_DB: timecapsule
+    ports:
+      - "5432:5432"
+    volumes:
+      - timecapsule_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U timecapsule -d timecapsule"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: timecapsule
+      DB_USER: timecapsule
+      DB_PASSWORD: timecapsule
+      JWT_SECRET: dev-only-change-me-use-at-least-32-characters-long
+    ports:
+      - "8080:8080"
+
+volumes:
+  timecapsule_pg:

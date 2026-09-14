@@ -1,0 +1,19 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+
+# Backend
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Mobile (future)
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+
+# Env
+.env
+.env.*
